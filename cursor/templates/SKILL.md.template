@@ -1,0 +1,30 @@
+---
+name: {{SKILL_NAME}}
+description: {{ONE_LINE_DESCRIPTION_FOR_CURSOR_AGENT_SELECTION}}
+---
+
+# {{Human-Readable Title}}
+
+{{Brief intro: when to use this skill and what it does.}}
+
+## Steps
+
+{{Numbered or bulleted workflow. Use placeholders instead of machine-specific paths:}}
+
+- **Project root**: `{{ABSOLUTE_PATH_TO_PROJECT}}`
+- **Optional**: other values your team replaces when copying into a repo (org, repo name, ports).
+
+## On results / follow-up
+
+{{What the agent should do after success or failure.}}
+
+---
+
+## Notes for maintainers
+
+When you copy this skill into a project repository (e.g. `.cursor/skills/{{SKILL_NAME}}/SKILL.md`):
+
+1. Replace every `{{PLACEHOLDER}}` with real values for that repo.
+2. Keep the YAML front matter: Cursor uses `name` and `description` for discovery.
+3. `name` should be unique, lowercase, hyphen-separated (e.g. `elixir-completion-checklist`).
+4. `description` should state the trigger phrases and scope so the agent picks this skill at the right time.
