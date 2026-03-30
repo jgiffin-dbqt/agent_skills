@@ -52,12 +52,13 @@ How we know this is done.
 2. **Identify dependencies** between them.
 3. **Reference architecture sections** that drive the design.
 4. **Include technical detail** from architecture (data models, APIs, integrations).
-5. **Follow your team’s plan format** for consistency.
+5. **Follow your team’s plan format** (e.g. `implementation_plans/README.md`) for consistency.
 
 ### Plan updates
 
 - Treat plans as **living documents**; update as implementation progresses.
 - Add **Implementation notes** (or similar) when execution diverges from the plan.
+- Keep the plan file **next to or clearly linked to** the codebase it describes, per team convention.
 
 ## GitHub issues (typical workflow)
 
@@ -69,9 +70,11 @@ How we know this is done.
 
 ## Architecture documentation layout
 
-- **Root:** A high-level architecture document captures version-independent system design.
-- **Version folders:** Use semantic versioning in names (e.g. `v0.1.0`, `v0.2.0`).
-- **Version folder contents:** May include wireframes, design notes, feature specs, and other release-scoped material.
+- **Root:** A **high-level architecture** document (name may vary) captures version-independent system design.
+- **Version folders:** Use **semantic versioning** in folder names (e.g. `v0.1.0`, `v0.2.0`). Optional display names in parentheses are fine.
+- **Contents:** Version folders may hold wireframes, design notes, feature specs, and other material scoped to that release.
+
+Adjust directory names to match your repository; keep a single obvious entry point for “current” vs “historical” architecture when helpful.
 
 ## Directory structure (examples — adjust names)
 
@@ -95,19 +98,22 @@ How we know this is done.
 
 ## Referencing code in plans
 
-- Use **module / package / namespace** names as your stack expects.
+When implementation plans mention code:
+
+- Use **module / package / namespace** names as your stack expects (e.g. `MyApp.Context.Module`).
 - Use **paths relative to the implementation repository root**.
 - Include **short code excerpts** when they clarify behavior or contracts.
-- Note **framework conventions** and any **intentional deviations**.
+- Call out **framework or team conventions** and any **intentional deviations**.
 
 ## Referencing other documents
 
 Plans should point to:
 
-- **Architecture** and **requirements** — stable paths or URLs (including cross-repo links if docs are split).
-- **Other implementation plans** — **relative paths within the implementation repo** when plans live next to code.
+- **Architecture** — stable URLs or paths (including cross-repository links if docs live separately).
+- **Requirements** — same as above.
+- **Other implementation plans** — use **relative paths within the implementation repo** when plans sit beside code; otherwise document the canonical location.
 
-Use a consistent style for cross-repo links so agents and humans can resolve them.
+Use a consistent style for cross-repo links (e.g. `planning-repo/architecture/...` vs full GitHub URLs) so agents and humans can resolve them.
 
 ## Best practices for implementation plans
 
