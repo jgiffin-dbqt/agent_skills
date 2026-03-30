@@ -1,0 +1,103 @@
+# CLAUDE.md — Agent Instructions for {{PROJECT_NAME}}
+
+## Project Overview
+{{PROJECT_DESCRIPTION}}
+
+## Code Quality Standards
+
+### Formatting
+- Run `mix format` after editing any `.ex`, `.exs`, or `.heex` files
+- Run before every commit
+
+### Documentation & Typespecs
+- Every module: `@moduledoc`
+- Every public function: `@doc` + `@spec`
+- Custom types: `@type` / `@typep`
+- Use `String.t()` not `String`, `atom()` not `Atom`, etc.
+
+### Static Analysis
+- Run `mix dialyzer` before marking any task complete
+- Fix all warnings — don't suppress unless absolutely necessary
+
+### Testing
+- Run `mix test` after every change
+- Fix ALL failures and compilation warnings before proceeding
+- Test both success and error cases
+- Use `ExUnit.CaptureLog.capture_log/2` for code that logs warnings/errors
+- Test files mirror `lib/` structure
+- Use `async: true` when tests don't share state
+
+### Completion Checklist (run before every commit)
+1. `mix format`
+2. `mix compile --warnings-as-errors`
+3. `mix test`
+4. `mix dialyzer`
+
+All four must pass. Never commit with failing tests or warnings.
+
+## Architecture
+
+### Multi-Tenancy
+<!-- Remove this section if not multi-tenant -->
+- Single database, shared schema
+- All queries must include `tenant_id`
+- Row Level Security awareness
+- Test with tenant isolation in mind
+
+### Directory Structure
+```
+lib/{{APP_NAME}}/          — Contexts and business logic
+lib/{{APP_NAME}}_web/      — Web layer (controllers, LiveViews, components)
+config/                    — Configuration
+priv/repo/migrations/      — Database migrations
+test/                      — Tests (mirrors lib/ structure)
+```
+
+### Key Contexts
+<!-- List your application's context modules -->
+- `{{MODULE_PREFIX}}.Accounts` — Users, authentication, authorization
+
+### Phoenix Conventions
+- Phoenix 1.7+ function components
+- LiveView for interactive UIs
+- Controllers stay thin — business logic in contexts
+- `embed_templates` for HTML templates
+
+## Development Setup
+
+### Database
+- PostgreSQL (Docker or local)
+- Port: {{DB_PORT}}
+- `mix ecto.create && mix ecto.migrate`
+- Dev seeds: `mix run priv/repo/dev_seeds.exs`
+
+### Running
+- `mix phx.server` (default port {{HTTP_PORT}})
+
+## Git Workflow
+
+### Branching
+- Work in git worktrees: `git worktree add -b <branch> /tmp/{{APP_NAME}}-<slug> main`
+- Branch naming: `fix/issue-{N}-{description}` or `feature/issue-{N}-{description}`
+- One branch per issue
+
+### Commits
+- Clear commit messages referencing the issue: `Description (fixes #N)`
+- Run completion checklist before committing
+
+### PR Submission Checklist (MANDATORY — do not skip any step)
+1. Run completion checklist (format, compile, test, dialyzer)
+2. Commit and push
+3. Create PR via `gh pr create`
+4. **Screenshots**: If the PR touches ANY `.heex` template or LiveView UI, capture screenshots and post as a PR comment. No exceptions.
+5. **Self-review**: Spawn a fresh sub-agent to cold-review the PR diff. Fix all findings, re-review until clean.
+6. Only then tell the user the PR is ready.
+
+## GitHub
+- Repo: `{{GITHUB_OWNER}}/{{GITHUB_REPO}}`
+- Issues track all work
+
+## Security
+- No sensitive data in error messages
+- Tenant data isolation is non-negotiable (if multi-tenant)
+- Credentials stored encrypted where possible
