@@ -1,0 +1,105 @@
+# CLAUDE.md — Agent Instructions for {{PLANNING_REPO_NAME}}
+
+## Repository Purpose
+This is a **planning repository** — it holds architecture, requirements, and implementation plans. Code lives in separate implementation repos.
+
+## Implementation Plans
+
+### Location and naming
+- Store plans in **`implementation_plans/{{APP_NAME}}/`**
+- When a plan maps to a GitHub issue: **`issue-{NUMBER}-{short-description}.md`**
+- Follow naming rules in `implementation_plans/README.md` if present
+
+### Plan template
+
+```markdown
+# [Feature/Fix Name]
+
+> **Architecture:** {{PATH_TO_ARCHITECTURE_DOC}}#[section]
+> **Requirements:** {{PATH_TO_REQUIREMENTS_DOC}}#[section]
+> **Issue:** {{GITHUB_OWNER}}/{{GITHUB_REPO}}/issues/N
+
+## Overview
+What this plan covers and why.
+
+## Current State
+What exists today.
+
+## Implementation
+Step-by-step approach with file paths and acceptance criteria.
+
+## Testing
+What tests will be added or modified.
+
+## Acceptance Criteria
+How we know this is done.
+```
+
+### Creating plans from architecture
+
+1. **Break down features** into discrete, implementable issues
+2. **Identify dependencies** between them
+3. **Reference architecture sections** that drive the design
+4. **Include technical detail** (data models, APIs, integrations)
+5. **Follow the plan format** consistently
+
+### Plan updates
+- Treat plans as **living documents** — update as implementation progresses
+- Add an **Implementation Notes** section when reality diverges from the plan
+- Keep plans clearly linked to the codebase they describe
+
+## Architecture Documentation
+
+### Layout
+- **Root:** High-level architecture document captures version-independent system design
+- **Version folders:** Semantic versioning in folder names (e.g. `v0.1.0`, `v0.2.0`)
+- **Contents:** Wireframes, design notes, feature specs scoped to each release
+
+## Referencing Code in Plans
+
+- Use **module/namespace names** as the stack expects (e.g. `MyApp.Context.Module`)
+- Use **paths relative to the implementation repo root**
+- Include **short code excerpts** when they clarify behavior or contracts
+- Call out **framework conventions** and any **intentional deviations**
+
+## Referencing Other Documents
+
+- **Architecture:** stable paths or URLs (including cross-repo links)
+- **Requirements:** same as above
+- **Other plans:** relative paths within the repo
+- Use a consistent style for cross-repo links
+
+## Checklists for Plan Authors
+
+### Multi-tenancy (when applicable)
+- Tenant isolation requirements
+- Tenant scoping on identifiers (`tenant_id` in queries and APIs)
+- Row-level security or equivalent enforcement
+- Test scenarios that prove isolation
+
+### Security
+- Credential storage and rotation
+- API and transport security
+- Data boundaries between tenants/customers
+- Input validation and safe defaults
+- Errors and logs that do NOT leak sensitive data
+
+### Performance
+- Database indexes and query shape
+- Caching and invalidation strategy
+- Background or async processing
+- Rate limits and backoff for external services
+
+## Best Practices
+
+1. **Be specific** — enough detail that an implementer can execute without guessing
+2. **Identify dependencies** — what must ship or be true before this work
+3. **Include examples** — data shapes, API sketches, pseudocode where they reduce ambiguity
+4. **Document decisions** — brief rationale for non-obvious choices
+5. **Keep plans current** — update when scope or understanding changes
+
+## GitHub
+- Planning repo: `{{GITHUB_OWNER}}/{{PLANNING_REPO_NAME}}`
+- Implementation repo: `{{GITHUB_OWNER}}/{{GITHUB_REPO}}`
+- Issues track all work on the implementation repo
+- Plans get PRs for review — don't push directly to main

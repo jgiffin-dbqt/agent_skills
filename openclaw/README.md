@@ -31,10 +31,12 @@ If an update removes or changes a built-in skill you depend on, the workspace co
 
 ```
 openclaw/
-├── README.md                          # this file
+├── README.md                                  # this file
 └── skills/
-    ├── pr-screenshots/SKILL.md        # capture UI screenshots for GitHub PRs
-    └── pr-submit/SKILL.md             # PR submission with cold self-review loop
+    ├── elixir-completion-checklist/SKILL.md    # format, compile, test, dialyzer gate
+    ├── git-worktree-dev-environment/SKILL.md   # isolated parallel development setup
+    ├── pr-screenshots/SKILL.md                 # capture UI screenshots for GitHub PRs
+    └── pr-submit/SKILL.md                      # PR submission with cold self-review loop
 ```
 
 ## Skill format

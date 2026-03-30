@@ -19,8 +19,10 @@ Any project-specific skills belong in the project repo.
 └── openclaw/                  # OpenClaw skills
     ├── README.md
     └── skills/
-        ├── pr-screenshots/    # capture UI screenshots for GitHub PRs
-        └── pr-submit/         # PR submission with cold self-review loop
+        ├── elixir-completion-checklist/   # format, compile, test, dialyzer gate
+        ├── git-worktree-dev-environment/  # isolated parallel development
+        ├── pr-screenshots/                # capture UI screenshots for GitHub PRs
+        └── pr-submit/                     # PR submission with cold self-review loop
 ```
 
 ## Agents

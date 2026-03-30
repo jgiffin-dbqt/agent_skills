@@ -28,7 +28,8 @@ Claude Code reads instructions from these locations (in order of precedence):
 claude/
 ├── README.md                               # this file
 └── templates/
-    └── CLAUDE.md.elixir-phoenix            # Elixir/Phoenix project template
+    ├── CLAUDE.md.elixir-phoenix            # Elixir/Phoenix project template
+    └── CLAUDE.md.planning-repo             # planning/architecture repository template
 ```
 
 ## Templates
@@ -36,6 +37,7 @@ claude/
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md.elixir-phoenix` | Full `CLAUDE.md` for an Elixir/Phoenix project: quality standards, architecture, git workflow, PR checklist |
+| `CLAUDE.md.planning-repo` | `CLAUDE.md` for a planning repo: implementation plans, architecture versioning, reference conventions, review checklists |
 
 ## Notes
 

@@ -22,8 +22,8 @@ metadata:
 3. Create PR via gh
 4. Screenshots (if ANY UI/template file changed)
 5. Cold self-review (spawn fresh sub-agent)
-6. Fix all findings
-7. Re-review until clean
+6. Triage findings
+7. Fix and re-review until clean
 8. Notify human
 ```
 
@@ -38,7 +38,7 @@ Examples by stack:
 - **Node/TypeScript:** `npm run lint && npm run typecheck && npm test`
 - **Python:** `ruff check . && mypy . && pytest`
 
-Adapt to your project. The point is: **every automated check passes before you push.**
+If there's a standalone completion checklist skill for the stack (e.g. `elixir-completion-checklist`), use it.
 
 ## Step 2: Commit and Push
 
@@ -76,15 +76,18 @@ Use the `pr-screenshots` skill. Key steps:
 ## Step 5: Cold Self-Review
 
 Spawn a **fresh sub-agent** that has NO knowledge of what you were trying to build.
-It gets only the PR diff and repo context.
 
-The cold reviewer:
-- Gets ONLY the PR reference (URL or `owner/repo#number`)
-- Has no knowledge of intent or what you were building
-- Fetches the diff via `gh pr diff`
-- Posts a structured review comment on the PR
+### Prompt content rules
 
-### Review comment format:
+The cold reviewer must receive **only** the PR reference (URL or `owner/repo#number`). Do NOT include:
+- Your planning notes or intent
+- Issue bodies or requirements
+- Local file excerpts or context
+- Explanation of what the change is supposed to do
+
+The whole point is a reviewer with fresh eyes. Leaking intent defeats the purpose.
+
+### Review comment format
 
 ```markdown
 ## Cold Review: PR #N
@@ -97,22 +100,44 @@ The cold reviewer:
 - A PR with no review comment is NOT ready — period
 - The review comment is proof the process ran
 
-## Step 6: Fix All Findings
+## Step 6: Triage Findings
 
-- 🔴 High: MUST fix before merge
-- 🟡 Medium: MUST fix before merge
-- 🟢 Low: Fix if reasonable, otherwise document why skipped
-- 💡 Suggestion: Optional, use judgment
+For each finding from the self-review:
 
-After fixing, run quality checks again (Step 1).
+### Fix without escalation
+- Formatting and style fixes required by the project
+- Missing docs/typespecs if standards require them
+- Obvious bugs with one clear fix
+- Typos in user-visible strings or docs
+- Test gaps for code the PR already touches
 
-## Step 7: Re-Review
+### Ask the human first
+- Architecture or API shape changes
+- Ambiguous business rules
+- Security-sensitive behavior changes
+- Anything that would materially change product intent
+- Scope additions beyond the original issue
 
-After pushing fixes, spawn ANOTHER cold reviewer on the new changes.
-Repeat Steps 5-6 until the reviewer returns ✅ Approve with no
-High/Medium findings.
+Batch all "ask first" items in **one** message when possible.
+
+## Step 7: Fix and Re-Review
+
+After fixing findings:
+1. Run quality checks again (Step 1)
+2. Commit and push
+3. Spawn ANOTHER cold reviewer on the updated PR
+4. Repeat until reviewer returns ✅ Approve with no High/Medium findings
 
 **The re-review is not optional.** Fixes can introduce new issues.
+
+### Classifying findings
+
+| Severity | Action |
+|----------|--------|
+| 🔴 High | MUST fix before merge |
+| 🟡 Medium | MUST fix before merge |
+| 🟢 Low | Fix if reasonable, otherwise document why skipped |
+| 💡 Suggestion | Optional, use judgment |
 
 ## Step 8: Notify
 
@@ -129,7 +154,7 @@ Tell the human: "PR #N is ready for your review."
 - [ ] Quality checks pass (zero warnings/failures)
 - [ ] PR created with clear description
 - [ ] Screenshots posted (if UI changed)
-- [ ] Cold self-review posted on PR
+- [ ] Cold self-review posted on PR (no intent leaked)
 - [ ] All High/Medium findings fixed
 - [ ] Re-review clean after fixes
 - [ ] Human notified
@@ -140,8 +165,9 @@ Tell the human: "PR #N is ready for your review."
 1. **Skipping screenshots** on UI changes
 2. **Marking PR as ready without review comment**
 3. **Not re-reviewing after fixes** — fixes can introduce new issues
-4. **Running cold reviewer with knowledge of intent** — defeats the purpose
+4. **Leaking intent into the cold reviewer prompt** — defeats the purpose
 5. **Fixing only High findings** — Medium findings are also mandatory fixes
+6. **Not triaging** — fixing everything blindly vs. escalating architecture questions
 
 ## Clean Up
 
