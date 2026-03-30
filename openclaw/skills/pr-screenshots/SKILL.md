@@ -115,7 +115,7 @@ git push origin pr-screenshots
 ```bash
 gh pr comment <NUMBER> -R <OWNER>/<REPO> --body "## Screenshots
 
-![description](https://raw.githubusercontent.com/<OWNER>/<REPO>/pr-screenshots/pr<NUMBER>/screenshot-name.png)
+![description](https://github.com/<OWNER>/<REPO>/blob/pr-screenshots/pr<NUMBER>/screenshot-name.png?raw=true)
 "
 ```
 
