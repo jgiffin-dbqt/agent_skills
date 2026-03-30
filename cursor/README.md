@@ -33,7 +33,7 @@ cursor/
 └── skills/
     ├── elixir-completion-checklist/
     ├── git-worktree-dev-environment/
-    └── submit-pr-github-bugbot/
+    └── submit-pr-github-self-review/
 ```
 
 ## Rules (fragments)
@@ -64,7 +64,7 @@ Replace `{{PLACEHOLDERS}}` when copying into a project. Keep skill `name` values
 |-------|-------------|
 | `elixir-completion-checklist` | Before completing Elixir/Phoenix tasks: format, compile, test, dialyzer |
 | `git-worktree-dev-environment` | Parallel agents/branches: worktrees, ports, DB isolation |
-| `submit-pr-github-bugbot` | Open a GitHub PR, triage Bot + human review, iterate until green |
+| `submit-pr-github-self-review` | Open a GitHub PR, cold subagent self-review (PR URL/number only), fix and repeat until clean |
 
 Each skill is self-contained Markdown with variables described in the body (e.g. `ELIXIR_PROJECT_ROOT`, `GITHUB_OWNER`, `GITHUB_REPO`). No symlinks are required: copy the folder you need into the target repo under `.cursor/skills/<name>/` and fill in values.
 
