@@ -44,6 +44,18 @@ git remote add origin git@github.com:<OWNER>/<REPO>.git
 git push origin pr-screenshots
 ```
 
+## Before Capturing — Verify Assets Build
+
+If working in a worktree or fresh clone, **CSS/JS won't build** without node_modules:
+
+```bash
+# Check for esbuild/tailwind errors in dev server output
+# If you see "Could not resolve topbar/tailwindcss", run:
+cd <project>/assets && npm install
+```
+
+Restart the dev server after installing. **Screenshots without styles are useless** — always verify the page renders with full CSS before capturing.
+
 ## Taking Screenshots
 
 Use playwright's built-in screenshot command:
@@ -92,6 +104,15 @@ node /tmp/screenshot-auth.mjs
 For authenticated pages, always use a script that logs in and screenshots in the same browser context.
 
 Adapt the auth approach to your project (cookie injection, dev auto-login env vars, etc.).
+
+**Full dev server startup for worktrees (Elixir/Phoenix):**
+```bash
+cd <worktree>
+cd assets && npm install && cd ..   # ensure CSS/JS build
+source .env                          # DB port overrides
+mix ecto.migrate                     # pending migrations
+mix phx.server                       # start on port 4000
+```
 
 ## Posting Screenshots to PRs
 
