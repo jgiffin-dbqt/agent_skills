@@ -5,6 +5,12 @@
 
 ## Code Quality Standards
 
+### ⚠️ LiveView Forms — Always Wrap Related Inputs
+- **Related inputs that should submit together MUST be wrapped in a single `<form>`** with `phx-change`
+- Bare `phx-change` on individual inputs outside a form only sends that input's value — sibling values are lost
+- Every `<form>` needs an `id` attribute for reliable LiveView DOM patching
+- Put `phx-debounce` on the `<input>`, not the `<form>` — selects/dropdowns should fire immediately
+
 ### ⚠️ No Floats for Money — EVER
 - **All monetary values are integers in cents** (`*_cents` fields)
 - **Never use `/` (float division)** for monetary calculations — use `div/2` with integer rounding
