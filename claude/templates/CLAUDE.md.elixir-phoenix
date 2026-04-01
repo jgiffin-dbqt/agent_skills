@@ -5,6 +5,13 @@
 
 ## Code Quality Standards
 
+### ⚠️ No Floats for Money — EVER
+- **All monetary values are integers in cents** (`*_cents` fields)
+- **Never use `/` (float division)** for monetary calculations — use `div/2` with integer rounding
+- **Never use `round(x * y / z)`** — use `div(x * y + div(z, 2), z)` for rounded integer division
+- **Never use `Float.round/2`** for display — use a `format_cents/1` helper that does integer formatting
+- Floats introduce IEEE 754 rounding errors. This is a hard rule, not a guideline.
+
 ### Formatting
 - Run `mix format` after editing any `.ex`, `.exs`, or `.heex` files
 - Run before every commit
